@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Yogishow drawings</title>
+    <style>
+      * { margin: 0; }
+      body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+      #random-image {
+          max-width: 100vw;
+          max-height: 90vh;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="random-image" src=""/>
+    <p id="caption">Yogib33r</p>
+    
+    <script>
+      images = [];
+      fetch('images/index.json', {
+          method: 'GET',
+      })
+    .then(response => response.json())
+    .then(data => (images = data))
+    .then(_ => changeImage())
+    .catch(error => console.error('Error:', error));
+      
+      function changeImage() {
+          if (images.length > 0) {
+              const randomImage = images[Math.floor(Math.random() * images.length)];
+              const img = document.getElementById('random-image')
+              img.src = "images/" + randomImage;
+          }
+      }
+      setInterval(changeImage, 2000);
+    </script>
+  </body>
+</html>
